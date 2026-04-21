@@ -68,6 +68,64 @@
   @media (max-width: 500px) {
     .footer-band { flex-direction:column; align-items:flex-start; text-align:left; }
   }
+
+  /* ═══ ANIMATIONS ═══ */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-30px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes fillBar {
+    from { width: 0; }
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(13,110,110,0.4); }
+    50%      { box-shadow: 0 0 0 12px rgba(13,110,110,0); }
+  }
+
+  .header { animation: fadeIn 0.6s ease-out; }
+  .section-title { animation: fadeInUp 0.6s ease-out both; }
+
+  /* Benner cards staggered */
+  .benner-card { opacity: 0; animation: slideInLeft 0.5s ease-out forwards; }
+  .benner-card:nth-child(1) { animation-delay: 0.1s; }
+  .benner-card:nth-child(2) { animation-delay: 0.2s; }
+  .benner-card:nth-child(3) { animation-delay: 0.3s; }
+  .benner-card:nth-child(4) { animation-delay: 0.4s; }
+  .benner-card:nth-child(5) { animation-delay: 0.5s; }
+
+  /* Progress bars fill in after card appears */
+  .b-bar-inner { animation: fillBar 1.2s ease-out 0.7s both; }
+
+  /* Calc box */
+  .calc-box { animation: fadeInUp 0.6s ease-out 0.6s both; }
+  .calc-param { opacity: 0; animation: scaleIn 0.4s ease-out forwards; }
+  .calc-param:nth-child(1) { animation-delay: 0.8s; }
+  .calc-param:nth-child(2) { animation-delay: 0.9s; }
+  .calc-param:nth-child(3) { animation-delay: 1.0s; }
+  .calc-param:nth-child(4) { animation-delay: 1.1s; }
+  .calc-result { animation: fadeInUp 0.5s ease-out 1.3s both, pulseGlow 2.5s ease-in-out 1.8s infinite; }
+
+  /* Chart */
+  .chart-wrap { animation: fadeInUp 0.6s ease-out 1.4s both; }
+
+  /* Analysis steps */
+  .astep { opacity: 0; animation: slideInLeft 0.5s ease-out forwards; }
+  .astep:nth-child(1) { animation-delay: 1.5s; }
+  .astep:nth-child(2) { animation-delay: 1.65s; }
+  .astep:nth-child(3) { animation-delay: 1.8s; }
+  .astep:nth-child(4) { animation-delay: 1.95s; }
 </style>
 </head>
 <body>
@@ -223,6 +281,7 @@ new Chart(bCtx, {
   },
   options: {
     responsive: true,
+    animation: { duration: 1600, easing: 'easeOutQuart', delay: (ctx) => ctx.dataIndex * 120 + 1500 },
     plugins: { legend:{display:false}, tooltip:{ callbacks:{ label:(c)=>`~${c.raw} enfermeras` } } },
     scales: {
       x: { ticks:{font:{size:10},color:'#0B1F3A'} },
@@ -263,11 +322,33 @@ new Chart(corrCtx, {
   },
   options: {
     responsive: true,
+    animation: { duration: 1800, easing: 'easeOutQuart', delay: (ctx) => ctx.dataIndex * 18 + 400 },
     plugins: { legend:{ labels:{font:{size:11},color:'#0B1F3A'} } },
     scales: {
       x: { title:{display:true,text:'Nivel Benner autopercibido (1-5)',font:{size:11}}, ticks:{color:'#0B1F3A'} },
       y: { title:{display:true,text:'Cumplimiento ítems práctica clínica (0-10)',font:{size:11}}, ticks:{color:'#0B1F3A'}, beginAtZero:true }
     }
+  }
+});
+
+// Animate numeric counters on load
+document.addEventListener('DOMContentLoaded', () => {
+  const counter = document.querySelector('.calc-result-val');
+  if (counter) {
+    const target = 67;
+    let current = 0;
+    const duration = 1400;
+    const startTime = performance.now() + 1300; // wait for box to appear
+    function step(now) {
+      if (now < startTime) { requestAnimationFrame(step); return; }
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      current = Math.round(eased * target);
+      counter.textContent = current + ' enfermeras';
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    counter.textContent = '0 enfermeras';
+    requestAnimationFrame(step);
   }
 });
 </script>
