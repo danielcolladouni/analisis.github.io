@@ -39,6 +39,16 @@
   .b-bar-outer { height:6px; background:#eef1f5; border-radius:3px; margin-top:6px; overflow:hidden; }
   .b-bar-inner { height:100%; border-radius:3px; }
 
+  /* Benner expandable */
+  .benner-card { cursor: pointer; transition: box-shadow 0.2s ease, transform 0.2s ease; }
+  .benner-card:hover { box-shadow: 0 4px 14px rgba(11,31,58,0.13); transform: translateY(-1px); }
+  .b-toggle { display: inline-block; float: right; color: var(--gray); font-size: 12px; transition: transform 0.3s ease; margin-left: 8px; }
+  .benner-card.open .b-toggle { transform: rotate(180deg); }
+  .b-full { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.3s ease, opacity 0.3s ease; opacity: 0; margin-top: 0; }
+  .benner-card.open .b-full { max-height: 600px; opacity: 1; margin-top: 12px; }
+  .b-full p { font-size: 13px; color: #3a4a5c; line-height: 1.55; margin-bottom: 8px; }
+  .b-full p:last-child { margin-bottom: 0; }
+
   /* Sample calculation */
   .calc-box { background:var(--white); border-radius:12px; padding:18px; box-shadow:0 2px 12px rgba(11,31,58,0.08); }
   .calc-title { font-size:14px; font-weight:700; color:var(--navy); margin-bottom:14px; }
@@ -143,47 +153,63 @@
     <div class="section" style="margin-bottom:0;">
       <div class="section-title">Modelo de Patricia Benner (1984)</div>
       <div class="benner-cards">
-        <div class="benner-card">
+        <div class="benner-card" onclick="toggleBenner(this)">
           <div class="b-num n">I</div>
           <div class="b-info">
-            <div class="b-lbl">Principiante</div>
-            <div class="b-desc">Sin experiencia; aplica reglas rígidas sin contextualizar</div>
+            <div class="b-lbl">Principiante <span class="b-toggle">▾</span></div>
             <div class="b-bar-outer"><div class="b-bar-inner" style="width:20%;background:#6B7A90;"></div></div>
+            <div class="b-full">
+              <p>La enfermera principiante carece de experiencia previa en las situaciones a las que se enfrenta. Su práctica se rige por la aplicación rígida de reglas y procedimientos aprendidos teóricamente, sin capacidad de adaptación al contexto.</p>
+              <p>Necesita supervisión constante para tomar decisiones clínicas. Sus actuaciones pueden ser limitadas e inflexibles ante situaciones reales que no encajan exactamente con las normas estudiadas.</p>
+            </div>
           </div>
         </div>
-        <div class="benner-card">
+        <div class="benner-card" onclick="toggleBenner(this)">
           <div class="b-num n">II</div>
           <div class="b-info">
-            <div class="b-lbl">Principiante avanzada</div>
-            <div class="b-desc">Reconoce patrones recurrentes en situaciones reales</div>
+            <div class="b-lbl">Principiante avanzada <span class="b-toggle">▾</span></div>
             <div class="b-bar-outer"><div class="b-bar-inner" style="width:40%;background:#1EB8B8;"></div></div>
+            <div class="b-full">
+              <p>Demuestra un rendimiento marginalmente aceptable, ya que ha hecho frente a suficientes situaciones reales como para identificar patrones recurrentes (los "aspectos" de Benner) por sí misma o señalados por un mentor.</p>
+              <p>Aún necesita ayuda para establecer prioridades y comprender el contexto global, pero comienza a reconocer significados similares en distintos pacientes.</p>
+            </div>
           </div>
         </div>
-        <div class="benner-card hl">
+        <div class="benner-card hl" onclick="toggleBenner(this)">
           <div class="b-num t">III</div>
           <div class="b-info">
-            <div class="b-lbl">Competente</div>
-            <div class="b-desc">Planifica y prioriza; mayor autonomía y seguridad</div>
+            <div class="b-lbl">Competente <span class="b-toggle">▾</span></div>
             <div class="b-bar-outer"><div class="b-bar-inner" style="width:60%;background:#0D6E6E;"></div></div>
+            <div class="b-full">
+              <p>Tras 2-3 años en el mismo puesto y con pacientes similares, la enfermera competente comienza a planificar conscientemente sus actuaciones a largo plazo. Es capaz de establecer un plan deliberado en función de objetivos.</p>
+              <p>Demuestra eficiencia, organización y dominio de muchas situaciones, aunque aún carece de la velocidad y flexibilidad de la enfermera proficiente. Sus decisiones son analíticas y basadas en la reflexión consciente.</p>
+            </div>
           </div>
         </div>
-        <div class="benner-card hl">
+        <div class="benner-card hl" onclick="toggleBenner(this)">
           <div class="b-num t">IV</div>
           <div class="b-info">
-            <div class="b-lbl">Eficiente</div>
-            <div class="b-desc">Visión holística; ajusta planes ante situaciones cambiantes</div>
+            <div class="b-lbl">Eficiente <span class="b-toggle">▾</span></div>
             <div class="b-bar-outer"><div class="b-bar-inner" style="width:80%;background:#0D6E6E;"></div></div>
+            <div class="b-full">
+              <p>Percibe las situaciones de forma global y no como una suma de aspectos aislados. Esta visión holística le permite identificar rápidamente cuándo un cuadro clínico se desvía de lo esperado y modificar planes de cuidados con agilidad.</p>
+              <p>Aprende de la experiencia y reconoce qué eventos típicos se esperan en un determinado momento, además de cómo deben modificarse los planes de cuidados ante eventos atípicos. La toma de decisiones es más rápida y matizada.</p>
+            </div>
           </div>
         </div>
-        <div class="benner-card hl">
+        <div class="benner-card hl" onclick="toggleBenner(this)">
           <div class="b-num t">V</div>
           <div class="b-info">
-            <div class="b-lbl">Experta</div>
-            <div class="b-desc">Comprensión intuitiva; actúa sin razonamiento analítico</div>
+            <div class="b-lbl">Experta <span class="b-toggle">▾</span></div>
             <div class="b-bar-outer"><div class="b-bar-inner" style="width:100%;background:#C8A84B;"></div></div>
+            <div class="b-full">
+              <p>Posee una enorme experiencia que le permite comprender de manera intuitiva cada situación clínica y abordar el problema sin perder tiempo en soluciones o diagnósticos alternativos. Su práctica es fluida, flexible y altamente competente.</p>
+              <p>Ya no se basa en reglas, guías o máximas analíticas para conectar su comprensión de la situación con la acción apropiada. Su rendimiento es altamente proficiente y a menudo no puede explicar fácilmente cómo llega a sus conclusiones.</p>
+            </div>
           </div>
         </div>
       </div>
+      <div style="margin-top:14px; font-size:11px; color:var(--gray); font-style:italic; text-align:right;">Benner P. From novice to expert: excellence and power in clinical nursing practice. Menlo Park, CA: Addison-Wesley; 1984.</div>
     </div>
 
     <div class="section" style="margin-bottom:0;">
@@ -206,8 +232,10 @@
       <div style="margin-top:14px;">
         <div class="chart-wrap">
           <div class="chart-title">Distribución esperada nivel Benner</div>
-          <div class="chart-sub">Distribución hipotética de la muestra según nivel autopercibido</div>
-          <canvas id="bennerChart" height="160"></canvas>
+          <div class="chart-sub">Distribución esperada de la muestra según nivel autopercibido</div>
+          <div style="position:relative; height:240px;">
+            <canvas id="bennerChart"></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -254,7 +282,9 @@
   <div class="section">
     <div class="section-title">Correlación esperada — Hipótesis del estudio</div>
     <div class="chart-wrap">
-      <canvas id="corrChart" height="200"></canvas>
+      <div style="position:relative; height:320px;">
+        <canvas id="corrChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -281,6 +311,7 @@ new Chart(bCtx, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     animation: { duration: 1600, easing: 'easeOutQuart', delay: (ctx) => ctx.dataIndex * 120 + 1500 },
     plugins: { legend:{display:false}, tooltip:{ callbacks:{ label:(c)=>`~${c.raw} enfermeras` } } },
     scales: {
@@ -290,20 +321,37 @@ new Chart(bCtx, {
   }
 });
 
-// Correlation scatter simulation
+// Correlation scatter — H2 hypothesis: more dispersion at lower Benner levels (I-III),
+// less dispersion at higher levels (IV-V) — i.e. expert nurses are more consistent.
 const corrCtx = document.getElementById('corrChart').getContext('2d');
 const scatter = [];
-for (let i=0; i<80; i++) {
-  const x = Math.random()*4+1;
-  const y = x * 1.8 + (Math.random()-0.5)*3 + Math.random()*2;
-  scatter.push({x: Math.round(x*10)/10, y: Math.min(10,Math.max(0,Math.round(y*10)/10))});
+function gauss() {
+  // Box-Muller approximation
+  let u = 0, v = 0;
+  while (u === 0) u = Math.random();
+  while (v === 0) v = Math.random();
+  return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
 }
+for (let i = 0; i < 90; i++) {
+  // x is the Benner level (1-5)
+  const x = Math.round((Math.random() * 4 + 1) * 10) / 10;
+  // Expected mean follows the H2 trend line: y = 2*x
+  const meanY = x * 2;
+  // Dispersion (sigma) is HIGH for low levels and LOW for high levels:
+  //   level 1 -> sigma ≈ 2.4
+  //   level 3 -> sigma ≈ 1.5
+  //   level 5 -> sigma ≈ 0.4
+  const sigma = Math.max(0.35, 2.8 - 0.55 * x);
+  const y = Math.min(10, Math.max(0, Math.round((meanY + gauss() * sigma) * 10) / 10));
+  scatter.push({ x, y });
+}
+
 new Chart(corrCtx, {
   type: 'scatter',
   data: {
     datasets: [
       {
-        label: 'Enfermera observada',
+        label: 'Enfermera observada (esperado)',
         data: scatter,
         backgroundColor: 'rgba(13,110,110,0.5)',
         pointRadius: 5,
@@ -322,14 +370,20 @@ new Chart(corrCtx, {
   },
   options: {
     responsive: true,
+    maintainAspectRatio: false,
     animation: { duration: 1800, easing: 'easeOutQuart', delay: (ctx) => ctx.dataIndex * 18 + 400 },
     plugins: { legend:{ labels:{font:{size:11},color:'#0B1F3A'} } },
     scales: {
-      x: { title:{display:true,text:'Nivel Benner autopercibido (1-5)',font:{size:11}}, ticks:{color:'#0B1F3A'} },
-      y: { title:{display:true,text:'Cumplimiento ítems práctica clínica (0-10)',font:{size:11}}, ticks:{color:'#0B1F3A'}, beginAtZero:true }
+      x: { title:{display:true,text:'Nivel Benner autopercibido (1-5)',font:{size:11}}, ticks:{color:'#0B1F3A'}, min: 0.5, max: 5.5 },
+      y: { title:{display:true,text:'Cumplimiento ítems práctica clínica (0-10)',font:{size:11}}, ticks:{color:'#0B1F3A'}, beginAtZero:true, max: 10 }
     }
   }
 });
+
+// Toggle Benner cards expand/collapse
+function toggleBenner(card) {
+  card.classList.toggle('open');
+}
 
 // Animate numeric counters on load
 document.addEventListener('DOMContentLoaded', () => {
